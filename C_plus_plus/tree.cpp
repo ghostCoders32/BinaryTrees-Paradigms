@@ -9,10 +9,23 @@ int main(){
     BinaryTree tree(fruit);
 
     Fruit* apple = new Apple(25);
+    Fruit* smallerApple = new Apple(5);
+    Fruit* black = new BlackBerry(100);
+    Fruit* anotherApple = new Apple(99);
     tree.add(apple);
+    tree.add(smallerApple);
+    tree.add(black);
+    tree.add(anotherApple);
+    tree.findHeaviest()->printFruit();
+    tree.findLightest()->printFruit();
+    tree.magnifyByType(APPLE , 270);
+    cout<<"---------------------------------------------------"<<endl;
+    tree.Iterate();
 
     cout<<"ENDED"<<endl;
-
+    tree.findHeaviest()->printFruit();
+    tree.findLightest()->printFruit();
+    
 
     return 0;
 }
@@ -98,7 +111,26 @@ void BinaryTree::filterByWeight(int weight){// a method that prints the nodes th
         this ->right->filterByWeight(weight);
 }
 
-void magnifyByType(int type, int weight);// a method that increases the weight of the nodes of a given fruit type by the given amount. For example, add 200 grams to all bananas in the tree.
+void BinaryTree::magnifyByType(int type, int weight){// a method that increases the weight of the nodes of a given fruit type by the given amount. For example, add 200 grams to all bananas in the tree.
+    this->magnifyOnly(type,weight);
+    vector<Fruit*> vec;
+    this->addNode(&vec);
+
+     for (auto i = vec.begin(); i != vec.end(); ++i){
+        if(i == vec.begin())
+            continue;
+        this->add(*i);    
+     }
+}
+void BinaryTree::magnifyOnly(int type , int weight){
+    if(this->fruit->getType() == type)
+        this->fruit->magnifyWeight(weight);
+    if(this->left != NULL)
+        this->left->magnifyOnly(type , weight);
+    if(this->right != NULL)
+        this->right->magnifyOnly(type , weight);
+}
+
 Fruit* BinaryTree::findHeaviest(){  //a method that finds the node with the greatest weight in the tree. 
     if(this->right == NULL)
         return this->fruit;
@@ -108,6 +140,20 @@ Fruit* BinaryTree::findLightest(){  //a method that finds the node with the leas
     if(this->left == NULL)
         return this->fruit;
     return this->left->findLightest();    
+}
+
+void BinaryTree::addNode(vector<Fruit*> *vector){
+    vector->push_back(this->fruit);
+    if(this->left != NULL){
+        this->left->addNode(vector);
+        this->left = NULL;
+    }
+
+    if(this->right!=NULL){
+        this->right->addNode(vector);
+        this->right = NULL;
+    }    
+
 }
 
 

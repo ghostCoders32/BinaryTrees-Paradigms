@@ -54,6 +54,7 @@ void Berry::printFruit(){
 
 BlackBerry::BlackBerry(int weight):Berry(weight){
      cout<<"BlackBerry Constructor called"<<endl;
+    this->inst = new OvalShaped(weight); //DELEGATION.
 }
 int BlackBerry::getType(){
     return BLACKBERRY;
@@ -61,7 +62,8 @@ int BlackBerry::getType(){
 void BlackBerry::printFruit(){
     cout<<"Blackberry fruit: (\n\n";
     Berry::printFruit();
-    cout<<"\n\n)";
+    this->inst->printFruit();
+    cout<<"\n\n)";    
 }
 
 Apple::Apple(int weight):OvalShaped(weight){

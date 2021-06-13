@@ -1,12 +1,17 @@
 #include "Fruit.h"
+#include <vector>
 
 class BinaryTree{
 
     private:
+
         BinaryTree *left;
         BinaryTree *right;
 
         Fruit* fruit;
+
+        void magnifyOnly(int type , int weight);
+        void addNode(vector<Fruit*>* vec);
 
     public:
         BinaryTree(Fruit* fruit);
@@ -23,5 +28,5 @@ class BinaryTree{
         void magnifyByType(int type, int weight);// a method that increases the weight of the nodes of a given fruit type by the given amount. For example, add 200 grams to all bananas in the tree.
         Fruit* findHeaviest();  //a method that finds the node with the greatest weight in the tree. 
         Fruit* findLightest();  //a method that finds the node with the least weight in the tree
-
+        
 };

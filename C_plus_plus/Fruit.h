@@ -7,6 +7,7 @@
 #define APPLE 10
 
 using namespace std;
+
 class Fruit{
     private:
         int weight;
@@ -24,11 +25,11 @@ class OvalShaped : public Fruit{
     public:
         OvalShaped(int weight);
         void setWeight(int weight);
-        int getType();
+        virtual int getType();
         void printFruit();
 };
 
-class Berry : public Fruit{
+class Berry :  public Fruit{
 
     public:
         Berry(int weight);
@@ -37,12 +38,14 @@ class Berry : public Fruit{
         void printFruit();
 };
 
-class BlackBerry : public Berry{
+class BlackBerry : public Berry {
 
     public :
         BlackBerry(int weight);
         int getType();
         void printFruit();
+    private:
+        OvalShaped  *inst;
 };
 
 class Apple: public OvalShaped{
