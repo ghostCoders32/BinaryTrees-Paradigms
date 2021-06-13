@@ -4,143 +4,137 @@ const BLACKBERRY = 20
 const APPLE = 10
 
 
-class Fruit {
+export class Fruit {
 
     constructor(weight) {
         this.weight = weight;
-    }
-
-    getType(fun) {
-        return fun();
-    }
-}
-
-class OvalShaped extends Fruit {
-
-    constructor(weight) {
-        super(weight);
-        this.type = 'OvalShaped';
+        this.type = 0;
     }
 
     getType() {
-        // @ts-ignore
-        return super(this.get_type);
-    }
-
-    get_type() {
-        return this.type;
-    }
-}
-class Berry extends Fruit {
-
-    constructor(weight) {
-        super(weight);
-        this.type = 'Berry';
-    }
-
-    getType() {
-        // @ts-ignore
-        return super(this.get_type);
-    }
-
-    get_type() {
+        console.log('Fruit Called');
         return this.type;
     }
 }
 
-class BlackBerry extends Berry {
+export class OvalShaped extends Fruit {
+
     constructor(weight) {
         super(weight);
-        this.type = 'BlackBerry';
+        this.type = OVAL_SHAPED;
     }
 
     getType() {
-        // @ts-ignore
-        return super(this.get_type);
+        console.log('Oval Called');
+        return this.type;
+    }
+}
+export class Berry extends Fruit {
+
+    constructor(weight) {
+        super(weight);
+        this.type = BERRY;
     }
 
-    get_type() {
+    getType() {
+        console.log('Berry Called');
+        return this.type;
+    }
+
+
+}
+
+export class BlackBerry extends Berry {
+    constructor(weight) {
+        super(weight);
+        this.type = BLACKBERRY;
+    }
+
+    getType() {
+        console.log('Blackberry Called');
+
         return this.type;
     }
 }
 
-class Apple extends OvalShaped {
+export class Apple extends OvalShaped {
     constructor(weight) {
         super(weight);
-        this.type = 'Apple';
+        this.type = APPLE;
     }
 
     getType() {
-        // @ts-ignore
-        return super(this.get_type);
-    }
-
-    get_type() {
+        console.log('Apple Called');
         return this.type;
     }
+
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class Tree {
 
     constructor() {
         this.root = null;
-        this.list = new Array();
     }
     add(fruit) {
-            if (fruit === null) {
-                console.log('Fruit is null!');
-                return;
-            }
-            if (root === null) {
-                this.root = new Node(fruit);
-                return;
-            }
-            this.root.add(fruit)
-            this.list.push(fruit);
+        if (fruit === null) {
+            console.log('Fruit is null!');
+            return;
         }
-        // magnifyByType(Type, Weight): a method that increases the weight of the nodes of a given fruit type by the given amount. For example, add 200 grams to all bananas in the tree.
-
-
-    getSorted() {
-        this.root.append(list);
+        if (this.root === null) {
+            this.root = new Node(fruit);
+            return;
+        }
+        this.root.add(fruit)
     }
-
     Iterate() {
         if (this.root !== null)
-            this.root.order(x => console.log(this.fruit.weight));
+            this.root.order((node) => console.log(node.fruit.weight));
     }
     filterByType(type) {
         this.root.order(this.filterType, type);
     }
 
-    filterByWeight(weight) {
-        this.list = this.inOrderTraverse(weight);
-        let list = []
-        for (let i of list) {
-            if (i.weight > weight)
-                list.push(i);
+    magnifyByType(type, weight) {
+        let x = function(node) {
+            if (node.fruit.getType() === arguments[1]) {
+                node.fruit.weight += arguments[2];
+            }
         }
-        return list;
-    }
-    findHeaviest() {
-        this.list = this.inOrderTraverse(weight);
-        return this.list[this.list.length - 1];
-    }
-    findLightest() {
-        this.list = this.inOrderTraverse(weight);
-        return this.list[0];
-    }
-    inOrderTraverse() {
-        list = [];
-        let x = function(list) {
-            list.push(this.fruit);
-        };
-        this.order(x, list);
-        return this.list;
+        this.root.order(x, type, weight);
     }
 
-    filterType(type) {
-        if (this.fruit.getType() === type)
-            console.log(this.fruit.weight);
+    filterByWeight(weight) {
+        let list = this.inOrderTraverse(weight);
+        let listA = []
+        for (let i of list) {
+            if (i.weight > weight)
+                listA.push(i);
+        }
+        return listA;
+    }
+    findHeaviest() {
+        let list = this.inOrderTraverse();
+        return list[list.length - 1];
+    }
+    findLightest() {
+        let list = this.inOrderTraverse();
+        return list[0];
+    }
+
+    inOrderTraverse() {
+        let list = [];
+        let x = function(node, list) {
+            list.push(node.fruit);
+        };
+        this.root.order(x, list);
+        return list;
+    }
+
+    filterType(node, type) {
+        if (node.fruit.getType() === type)
+            console.log(node.fruit.weight);
     }
 }
 
@@ -167,14 +161,35 @@ class Node {
             this.right = new Node(fruit);
     }
 
-    order(f, args) {
+    order(f, args1, args2) {
         if (this.left !== null)
-            this.left.order(f, args);
-        f(args);
+            this.left.order(f, args1, args2);
+        f(this, args1, args2);
         if (this.right !== null)
-            this.right.order(f, args);
+            this.right.order(f, args1, args2);
     }
 }
 
 
 let X = new Tree();
+let apple1 = new Apple(10);
+let blackBerry1 = new BlackBerry(25);
+let apple2 = new Apple(30);
+let berry1 = new Berry(200);
+
+X.add(apple1);
+X.add(blackBerry1);
+X.add(apple2);
+X.add(berry1);
+X.Iterate();
+console.log("-----------------------")
+X.filterByType(APPLE);
+
+console.log(X.findHeaviest().weight)
+console.log(X.findLightest().weight)
+
+X.magnifyByType(APPLE, 500);
+console.log('----------')
+X.Iterate();
+console.log('----------------------')
+console.log(X.filterByWeight(30));
