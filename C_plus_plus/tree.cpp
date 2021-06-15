@@ -11,11 +11,16 @@ int main(){
     Fruit* apple = new Apple(25);
     Fruit* smallerApple = new Apple(5);
     Fruit* black = new BlackBerry(100);
-    Fruit* anotherApple = new Apple(99);
+    Fruit* anotherApple = new Apple(852);
+    Fruit* orange1 = new Orange(1000);
+    Fruit* orange2 = new Orange(-1000);
+
     tree.add(apple);
     tree.add(smallerApple);
     tree.add(black);
     tree.add(anotherApple);
+    tree.add(orange1);
+    tree.add(orange2);
     tree.findHeaviest()->printFruit();
     tree.findLightest()->printFruit();
     tree.magnifyByType(APPLE , 270);

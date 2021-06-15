@@ -5,6 +5,8 @@
 #define BERRY 2
 #define BLACKBERRY 20
 #define APPLE 10
+#define CITRUS 3
+#define ORANGE 30
 
 using namespace std;
 
@@ -38,6 +40,15 @@ class Berry :  public Fruit{
         void printFruit();
 };
 
+class Citrus {
+    private :
+        bool isFruitt;
+    public :
+        Citrus(bool isFruit);
+        virtual bool isFruit() =0; 
+        void printCitrus();   
+};
+
 class BlackBerry : public Berry {
 
     public :
@@ -54,6 +65,16 @@ class Apple: public OvalShaped{
         int getType();
         void printFruit();
 };
+
+class Orange: public Fruit , public Citrus{
+    public:
+        Orange(int weight);
+        int getType();
+        void printFruit();
+        bool isFruit();
+};
+
+
 
 
 

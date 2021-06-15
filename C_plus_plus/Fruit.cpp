@@ -51,6 +51,18 @@ void Berry::printFruit(){
     cout<<"Berry fruit of weight : "<<Fruit::getWeight()<<endl;
 }
 
+Citrus::Citrus(bool isFruit){
+    cout<<"Citrus constructor called\n";
+    this->isFruitt = isFruit;
+}
+void Citrus::printCitrus(){
+    if(this->isFruitt)
+        cout<<"This fruit is Citrus"<<endl;
+    else
+        cout<<"This is Citrus but not a fruit"<<endl;    
+}
+
+
 
 BlackBerry::BlackBerry(int weight):Berry(weight){
      cout<<"BlackBerry Constructor called"<<endl;
@@ -63,7 +75,7 @@ void BlackBerry::printFruit(){
     cout<<"Blackberry fruit: (\n\n";
     Berry::printFruit();
     this->inst->printFruit();
-    cout<<"\n\n)";    
+    cout<<"\n\n)\n";    
 }
 
 Apple::Apple(int weight):OvalShaped(weight){
@@ -75,7 +87,22 @@ int Apple::getType(){
 void Apple::printFruit(){
     cout<<"Apple fruit: (\n\n";
     OvalShaped::printFruit();
-    cout<<"\n\n)";
+    cout<<"\n\n)\n";
+}
+
+Orange::Orange(int weight):Fruit(weight), Citrus(true){
+        cout<<"Orange Constructor called"<<endl;
+}
+int Orange::getType(){
+    return ORANGE;
+}
+void Orange::printFruit(){
+    cout<<"Orange fruit of weight = "<<Fruit::getWeight()<<": (\n\n";
+    Citrus::printCitrus();
+    cout<<"\n\n)\n";
+}
+bool Orange::isFruit(){
+    return true;
 }
 
 
