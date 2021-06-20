@@ -1,3 +1,10 @@
 .vscode
+.metals
 C_plus_plus/main.exe
 C_plus_plus/make.c
+
+*.class
+
+Hello.scala
+*.tasty
+hello-world
