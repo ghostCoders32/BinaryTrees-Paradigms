@@ -4,79 +4,48 @@ const BLACKBERRY = 20
 const APPLE = 10
 
 
-export class Fruit {
+let Fruit = {
 
-    constructor(weight) {
+    weight: 0,
+    type: 0,
+    getType() {
+        // console.log('Fruit Called');
+        return this.type;
+    },
+    setWeight(weight) {
         this.weight = weight;
-        this.type = 0;
     }
+};
 
-    getType() {
-        console.log('Fruit Called');
-        return this.type;
-    }
-}
-
-export class OvalShaped extends Fruit {
-
-    constructor(weight) {
-        super(weight);
-        this.type = OVAL_SHAPED;
-    }
-
-    getType() {
-        console.log('Oval Called');
-        return this.type;
-    }
-}
-export class Berry extends Fruit {
-
-    constructor(weight) {
-        super(weight);
-        this.type = BERRY;
-    }
-
-    getType() {
-        console.log('Berry Called');
-        return this.type;
-    }
-
+let OvalShaped = {
+    __proto__: Fruit,
+    type: OVAL_SHAPED,
+    // constructor(weight) {
+    //     super(weight);
+    //     this.type = OVAL_SHAPED;
+    // },
 
 }
-
-export class BlackBerry extends Berry {
-    constructor(weight) {
-        super(weight);
-        this.type = BLACKBERRY;
-    }
-
-    getType() {
-        console.log('Blackberry Called');
-
-        return this.type;
-    }
+let Berry = {
+    __proto__: Fruit,
+    type: BERRY,
 }
 
-export class Apple extends OvalShaped {
-    constructor(weight) {
-        super(weight);
-        this.type = APPLE;
-    }
-
-    getType() {
-        console.log('Apple Called');
-        return this.type;
-    }
-
+let BlackBerry = {
+    __proto__: Berry,
+    type: BLACKBERRY,
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Tree {
-
-    constructor() {
-        this.root = null;
+let Apple = {
+        __proto__: OvalShaped,
+        type: APPLE,
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let Tree = {
+    root: null,
+
     add(fruit) {
         if (fruit === null) {
             console.log('Fruit is null!');
@@ -87,14 +56,14 @@ class Tree {
             return;
         }
         this.root.add(fruit)
-    }
+    },
     Iterate() {
         if (this.root !== null)
             this.root.order((node) => console.log(node.fruit.weight));
-    }
+    },
     filterByType(type) {
         this.root.order(this.filterType, type);
-    }
+    },
 
     magnifyByType(type, weight) {
         let x = function(node) {
@@ -102,8 +71,13 @@ class Tree {
                 node.fruit.weight += arguments[2];
             }
         }
+
         this.root.order(x, type, weight);
-    }
+        let list = this.inOrderTraverse();
+        this.root = null;
+        for (let i = 0; i < list.length; i++)
+            this.add(list[i]);
+    },
 
     filterByWeight(weight) {
         let list = this.inOrderTraverse(weight);
@@ -113,15 +87,15 @@ class Tree {
                 listA.push(i);
         }
         return listA;
-    }
+    },
     findHeaviest() {
         let list = this.inOrderTraverse();
         return list[list.length - 1];
-    }
+    },
     findLightest() {
         let list = this.inOrderTraverse();
         return list[0];
-    }
+    },
 
     inOrderTraverse() {
         let list = [];
@@ -130,7 +104,7 @@ class Tree {
         };
         this.root.order(x, list);
         return list;
-    }
+    },
 
     filterType(node, type) {
         if (node.fruit.getType() === type)
@@ -171,11 +145,19 @@ class Node {
 }
 
 
-let X = new Tree();
-let apple1 = new Apple(10);
-let blackBerry1 = new BlackBerry(25);
-let apple2 = new Apple(30);
-let berry1 = new Berry(200);
+let X = Object.create(Tree);
+
+let apple1 = Object.create(Apple);
+apple1.setWeight(10);
+
+let blackBerry1 = Object.create(BlackBerry);
+blackBerry1.setWeight(25);
+
+let apple2 = Object.create(Apple);
+apple2.setWeight(30);
+
+let berry1 = Object.create(Berry);
+berry1.setWeight(200);
 
 X.add(apple1);
 X.add(blackBerry1);
@@ -184,10 +166,10 @@ X.add(berry1);
 X.Iterate();
 console.log("-----------------------")
 X.filterByType(APPLE);
-
+console.log('////////////////')
 console.log(X.findHeaviest().weight)
 console.log(X.findLightest().weight)
-
+console.log('//////////////////')
 X.magnifyByType(APPLE, 500);
 console.log('----------')
 X.Iterate();
