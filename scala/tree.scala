@@ -6,25 +6,17 @@ object Types{
   val BERRY = "Berry"
   val BLACKBERRY = "Blackberry"
   val OVALSHAPED ="OvalShaped"
-
-// #define BLACKBERRY 20
-// #define APPLE 10
-// #define CITRUS 3
-// #define ORANGE 30
-
-
-
+  val ORANGE="Orange"
 }
 object Main{
 
   def main(args: Array[String]) :Unit = {
-  print("HELLO WORLD")
   val tree:Tree = new Tree()
-  val apple1 = new Apple(10)
-  val apple2 = new Apple(5)
-  val apple3 = new Apple(15)
-  val apple4 = new Apple(0)  
-  val apple5 = new Apple(20)
+  val apple1:Fruit = new Apple(10)
+  val apple2:Fruit = new Apple(5)
+  val apple3:Fruit = new Apple(15)
+  val apple4:Fruit = new Apple(0)  
+  val apple5:Fruit = new Apple(20)
 
   tree.add(apple1);
   tree.add(apple2);
@@ -32,16 +24,16 @@ object Main{
   tree.add(apple4);
   tree.add(apple5);
 
-  val berry1 = new Berry(1000)
-  val blackBerry1 = new BlackBerry(-1000)
-  val berry2 = new Berry(500)
-  val blackBerry2 = new BlackBerry(750)
-  val berry3 = new Berry(-500)
-  val blackBerry3 = new BlackBerry(100000)
-  val berry4 = new Berry(999)
-  val blackBerry4 = new BlackBerry(870)
-  val berry5 = new Berry(-850)
-  val blackBerry5 = new BlackBerry(150)
+  val berry1:Fruit = new Berry(1000)
+  val blackBerry1:Fruit = new BlackBerry(-1000)
+  val berry2:Fruit = new Berry(500)
+  val blackBerry2:Fruit = new BlackBerry(750)
+  val berry3:Fruit = new Berry(-500)
+  val blackBerry3:Fruit = new BlackBerry(100000)
+  val berry4:Fruit = new Berry(999)
+  val blackBerry4:Fruit = new BlackBerry(870)
+  val berry5:Fruit = new Berry(-850)
+  val blackBerry5:Fruit = new BlackBerry(150)
 
 
   tree add berry1
@@ -56,6 +48,15 @@ object Main{
   tree add blackBerry4
   tree add blackBerry5
   
+
+  val orange1:Fruit = new Orange(255);
+  val orange2:Fruit = new Orange(-255);
+  val orange3:Fruit = new Orange(0);
+
+  tree add orange1
+  tree add orange2
+  tree add orange3
+
   tree.Iterate()
   println("-----------")
   tree.filterByType(Types.APPLE)
@@ -168,36 +169,38 @@ var root:Node = null
 
 abstract class Fruit (var weight:Int){
 
-  println("Fruit Constructor called!")
+  // println("Fruit Constructor called!")
 
   def getWeight = weight
   def setWeight(x:Int):Unit={weight = x}
 
-  def printFruit():Unit
+  def printFruit():Unit={
+    println(s"${getType}(${getWeight})");
+  }
   def getType():String
 }
 
 class OvalShaped(weight:Int) extends Fruit(weight){
-  println("OvalShaped Constructor called!")
+  // println("OvalShaped Constructor called!")
   
   override def setWeight(x:Int):Unit = {
     println("Set Weight Override!!!")
     super.setWeight(x)
   }
 
-  override def printFruit(): Unit = {
-    println("OvalShaped fruit!!")
-  }
+  // override def printFruit(): Unit = {
+  //   println("OvalShaped fruit!!")
+  // }
   override def getType() = Types.OVALSHAPED
 }
 
 
 class Berry(weight:Int) extends Fruit(weight){
-  println("Berry Constructor called!")
+  // println("Berry Constructor called!")
 
-  override def printFruit(): Unit = {
-    println(s"Berry fruit of weight: ${getWeight}")
-  }
+  // override def printFruit(): Unit = {
+  //   println(s"Berry fruit of weight: ${getWeight}")
+  // }
    override def getType():String={
     Types.BERRY
   }
@@ -205,49 +208,36 @@ class Berry(weight:Int) extends Fruit(weight){
 }
 class Apple(weight:Int) extends OvalShaped(weight){
 
-      override def printFruit(): Unit = {
-        println(s"This is Apple of weight : ${getWeight}")
+      // override def printFruit(): Unit = {
+      //   println(s"This is Apple of weight : ${getWeight}")
         
-      }
+      // }
       override def getType():String = Types.APPLE
 }
 
 class BlackBerry(weight:Int) extends  Berry(weight) {
-      println("BlackBerry Constructor called!")
+      // println("BlackBerry Constructor called!")
       private val oval:OvalShaped = new OvalShaped (weight)
 
-       override def printFruit(): Unit = {
-        println(s"This is BlackBerry of weight : ${getWeight}")
-        }
+      //  override def printFruit(): Unit = {
+      //   println(s"This is BlackBerry of weight : ${getWeight}")
+      //   }
       override def getType():String = Types.BLACKBERRY
 };
 
 
 
-/**
-
-
-class Citrus {
-    private :
-        bool isFruitt;
-    public :
-        Citrus(bool isFruit);
-        virtual bool isFruit() =0; 
-        void printCitrus();   
+class Citrus(isFruitt:Boolean) {
+    
+        def isFruit() =isFruitt; 
+        def printCitrus():String="This is a Citrus."   
 };
 
-class Orange: public Fruit , public Citrus{
-    public:
-        Orange(int weight);
-        int getType();
-        void printFruit();
-        bool isFruit();
+class Orange(weight:Int) extends Fruit(weight){
+        private val citrus=new Citrus(true);
+        override def getType():String = Types.ORANGE
+        
+      //   override def printFruit(): Unit = {
+      //   println(s"Orange(${getWeight})"); 
+      // }
 };
-
-
-
-
-
-
-
-  */
