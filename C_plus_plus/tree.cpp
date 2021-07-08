@@ -5,7 +5,7 @@
 
 int main(){
 
-    Fruit* fruit = new BlackBerry(10);
+    Fruit* fruit = new Berry(10);
     BinaryTree tree(fruit);
 
     Fruit* apple = new Apple(25);
@@ -21,16 +21,18 @@ int main(){
     tree.add(anotherApple);
     tree.add(orange1);
     tree.add(orange2);
-    tree.findHeaviest()->printFruit();
-    tree.findLightest()->printFruit();
+    cout<<"Heaviest and Lightest."<<endl;
+    cout<<tree.findHeaviest()->printFruit()<<endl;
+    cout<<tree.findLightest()->printFruit()<<endl;
     tree.magnifyByType(APPLE , 270);
     cout<<"---------------------------------------------------"<<endl;
     tree.Iterate();
 
+
+    cout<<"Heaviest and Lightest."<<endl;
+    cout<<tree.findHeaviest()->printFruit()<<endl;
+    cout<<tree.findLightest()->printFruit()<<endl;
     cout<<"ENDED"<<endl;
-    tree.findHeaviest()->printFruit();
-    tree.findLightest()->printFruit();
-    
 
     return 0;
 }
@@ -50,7 +52,6 @@ void BinaryTree::add(Fruit* fruit){
     if(value < this->fruit->getWeight()){ // Left
         if(this->left == NULL){
             this->left = new BinaryTree(fruit);
-            cout<<value<<" Added to the left of node "<<this->fruit->getWeight()<<endl;
         }
         else
             this->left->add(fruit);    
@@ -58,7 +59,6 @@ void BinaryTree::add(Fruit* fruit){
     else{//Right
         if(this->right == NULL){
             this->right = new BinaryTree(fruit);
-            cout<<value<<" Added to the right of node "<<this->fruit->getWeight()<<endl;
         }
         else
             this->right->add(fruit);     
@@ -90,7 +90,7 @@ return this->right;
 void BinaryTree::Iterate(){//a method that prints the in-order traversal of the tree.
     if(this->left != NULL)
         this->left->Iterate();
-    this->fruit->printFruit();
+    cout<<this->fruit->printFruit()<<endl;
     if(this->right !=NULL)
         this->right->Iterate();    
 }  

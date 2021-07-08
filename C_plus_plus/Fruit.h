@@ -19,7 +19,7 @@ class Fruit{
         void setWeight(int weight);
         void magnifyWeight(int addition);
         virtual int getType() = 0;   
-        virtual void printFruit() = 0;
+        virtual string printFruit() = 0;
 };
 
 class OvalShaped : public Fruit{
@@ -28,7 +28,7 @@ class OvalShaped : public Fruit{
         OvalShaped(int weight);
         void setWeight(int weight);
         virtual int getType();
-        void printFruit();
+        string printFruit();
 };
 
 class Berry :  public Fruit{
@@ -37,7 +37,7 @@ class Berry :  public Fruit{
         Berry(int weight);
         void setWeight(int weight);
         int getType();
-        void printFruit();
+        string printFruit();
 };
 
 class Citrus {
@@ -46,7 +46,7 @@ class Citrus {
     public :
         Citrus(bool isFruit);
         virtual bool isFruit() =0; 
-        void printCitrus();   
+        string printCitrus();   
 };
 
 class BlackBerry : public Berry {
@@ -54,7 +54,7 @@ class BlackBerry : public Berry {
     public :
         BlackBerry(int weight);
         int getType();
-        void printFruit();
+        string printFruit();
     private:
         OvalShaped  *inst;
 };
@@ -63,14 +63,14 @@ class Apple: public OvalShaped{
     public :
         Apple(int weight);
         int getType();
-        void printFruit();
+        string printFruit();
 };
 
 class Orange: public Fruit , public Citrus{
     public:
         Orange(int weight);
         int getType();
-        void printFruit();
+        string printFruit();
         bool isFruit();
 };
 
